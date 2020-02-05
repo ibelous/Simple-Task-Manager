@@ -12,8 +12,6 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'first_name',
-            'last_name',
             'username',
             'user_type',
             'email',
@@ -27,8 +25,6 @@ class UserRegistrationSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'first_name',
-            'last_name',
             'username',
             'email',
             'user_type',
@@ -43,8 +39,6 @@ class UserRegistrationSerializer(ModelSerializer):
 
     def create(self, validated_data):
         user = User(
-            first_name=validated_data.get('first_name'),
-            last_name=validated_data.get('last_name'),
             username=validated_data.get('username'),
             user_type=validated_data.get('user_type'),
             email=validated_data.get('email'),
@@ -74,9 +68,7 @@ class UserLoginSerializer(serializers.Serializer):
 class UserRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name',
-                  'last_name',
-                  'username',
+        fields = ('username',
                   'email',
                   'user_type',
                   'password',)

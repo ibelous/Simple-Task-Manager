@@ -13,7 +13,7 @@ class IsManager(permissions.BasePermission):
 
 class SafeOnly(permissions.BasePermission):
     def has_permission(self, request, view):
-        return permissions.IsAuthenticated and request.method in permissions.SAFE_METHODS
+        return request.user.is_authenticated and request.method in permissions.SAFE_METHODS
 
 
 class IsProjectMember(permissions.BasePermission):

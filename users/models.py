@@ -21,4 +21,4 @@ class User(AbstractUser):
         return self.user_type == 'Developer'
 
     def __str__(self):
-        return self.first_name and self.last_name or self.username
+        return self.username

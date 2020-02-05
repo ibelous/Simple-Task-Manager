@@ -152,7 +152,7 @@ class UserDetailAPIViewTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
     def test_change_dev_by_itself(self):
-        url = reverse('users:user_details', kwargs={'pk': 2})
+        url = reverse('users:user_details', kwargs={'pk': User.objects.all()[1].id})
         self.api_authentication(self.developer_token)
         response = self.client.get(url)
         content = json.loads(response.content).get('username')
@@ -165,18 +165,14 @@ class UserDetailAPIViewTestCase(APITestCase):
         self.assertTrue(content == "dev1")
 
     def test_get_manager_by_dev(self):
-        for user in User.objects.all():
-            print(user.id)
-        url = reverse('users:user_details', kwargs={'pk': 7})
+        url = reverse('users:user_details', kwargs={'pk': User.objects.all()[0].id})
         self.api_authentication(self.developer_token)
         response = self.client.get(url)
         content = json.loads(response.content).get('detail')
         self.assertTrue(content == "You do not have permission to perform this action.")
 
     def test_get_and_change_dev_by_manager(self):
-        url = reverse('users:user_details', kwargs={'pk': 5})
-        for user in User.objects.all():
-            print(user.id)
+        url = reverse('users:user_details', kwargs={'pk': User.objects.all()[1].id})
         self.api_authentication(self.manager_token)
         response = self.client.get(url)
         content = json.loads(response.content).get('username')

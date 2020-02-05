@@ -2,11 +2,7 @@ from projects.serializers.project_serializers import ProjectSerializer, CreatePr
 from projects.models import Project
 from projects.permissions import IsManager, IsProjectMember, SafeOnly
 
-from rest_framework import generics, views
-from rest_framework import status
-from rest_framework.response import Response
-
-from django.contrib.auth import login, logout
+from rest_framework import generics
 
 
 class ProjectListAPIView(generics.ListAPIView):

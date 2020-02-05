@@ -1,6 +1,6 @@
 from django.db import models
 
-import time
+import datetime
 
 from users.models import User
 
@@ -24,15 +24,15 @@ class Project(models.Model):
 
 class Task(models.Model):
     TASK_STATUSES = (
-        ('Opened', 'Opened'),
-        ('Review', 'Review'),
-        ('Closed', 'Closed'),
+        ('To do', 'To do'),
+        ('In progress', 'In progress'),
+        ('Done', 'Done'),
     )
 
     title = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=3000)
-    due_date = models.DateField(default=time.ctime(time.time()+1000000))
-    status = models.CharField(choices=TASK_STATUSES, max_length=10)
+    due_date = models.DateTimeField(default=datetime.date.today()+datetime.timedelta(days=7))
+    status = models.CharField(choices=TASK_STATUSES, max_length=15)
     dev = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tasks')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
 
