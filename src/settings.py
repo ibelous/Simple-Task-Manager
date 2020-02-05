@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_registration',
+    'rest_auth',
     'rest_framework',
     'rest_framework.authtoken',
 
     'users',
+    'projects',
 ]
 
 MIDDLEWARE = [
@@ -145,7 +148,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
