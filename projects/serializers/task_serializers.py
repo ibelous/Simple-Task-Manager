@@ -71,7 +71,8 @@ class TaskDetailViewSerializer(ModelSerializer):
 
     def update(self, instance, validated_data):
         for attr, value in validated_data.items():
-            if attr != 'status' and getattr(instance, attr) != value:
+
+            if attr != 'status' and getattr(instance, attr) != value and self.context['request'].user.is_developer:
                 raise serializers.ValidationError('You can change only task status as developer.')
             else:
                 setattr(instance, attr, value)
