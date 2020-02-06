@@ -1,4 +1,5 @@
-from projects.serializers.project_serializers import ProjectSerializer, CreateProjectSerializer, ProjectDetailView
+from projects.serializers.project_serializers import ProjectSerializer, CreateProjectSerializer, \
+    ProjectDetailViewSerializer
 from projects.models import Project
 from projects.permissions import IsManager, IsProjectMember, SafeOnly
 
@@ -17,7 +18,7 @@ class ProjectCreateAPIView(generics.CreateAPIView):
 
 
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = ProjectDetailView
+    serializer_class = ProjectDetailViewSerializer
     lookup_field = 'pk'
     queryset = Project.objects.all()
     permission_classes = (IsProjectMember, IsManager | SafeOnly, )

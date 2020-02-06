@@ -116,9 +116,23 @@ class ProjectCreateAPIViewTestCase(APITestCase):
         self.api_authentication(self.manager_token)
         response = self.client.post(self.url, {'title': 'test title',
                                                'description': 'test description',
-                                               'members': self.developer.id})
+                                               'members': [self.developer.id,
+                                                           self.manager.id]})
         content = json.loads(response.content).get('title')
         self.assertTrue(content == 'test title')
+
+    def test_create_project_with_no_manager_or_developer(self):
+        self.api_authentication(self.manager_token)
+        response = self.client.post(self.url, {'title': 'test title',
+                                               'description': 'test description',
+                                               'members': self.developer.id})
+        content = json.loads(response.content).get('non_field_errors')[0]
+        self.assertTrue(content == 'Project need to have at least one manager and one developer.')
+        response = self.client.post(self.url, {'title': 'test title',
+                                               'description': 'test description',
+                                               'members': self.manager.id})
+        content = json.loads(response.content).get('non_field_errors')[0]
+        self.assertTrue(content == 'Project need to have at least one manager and one developer.')
 
 
 class ProjectDetailAPIViewTestCase(APITestCase):

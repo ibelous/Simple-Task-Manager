@@ -15,7 +15,7 @@ class Project(models.Model):
 
     title = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=3000)
-    status = models.CharField(choices=PROJECT_STATUSES, max_length=10)
+    status = models.CharField(choices=PROJECT_STATUSES, max_length=10, default='Opened')
     members = models.ManyToManyField(User, related_name='projects')
 
     def __str__(self):
@@ -32,8 +32,8 @@ class Task(models.Model):
     title = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=3000)
     due_date = models.DateTimeField(default=datetime.date.today()+datetime.timedelta(days=7))
-    status = models.CharField(choices=TASK_STATUSES, max_length=15)
-    dev = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tasks')
+    status = models.CharField(choices=TASK_STATUSES, max_length=15, default='To do')
+    developer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tasks')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
 
     def __str__(self):

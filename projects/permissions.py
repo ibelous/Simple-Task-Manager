@@ -20,3 +20,14 @@ class IsProjectMember(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return request.user in obj.members.all()
+
+
+class IsTaskProjectMember(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user in Project.objects.get(id=view.kwargs['project_id']).members.all()
+
+
+class IsTaskDeveloperOrManager(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.developer or request.user.is_manager
