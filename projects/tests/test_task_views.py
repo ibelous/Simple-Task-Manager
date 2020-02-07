@@ -162,7 +162,7 @@ class CreateTaskAPIViewTestCase(APITestCase):
         content = json.loads(response.content).get("non_field_errors")[0]
         self.assertTrue(content == 'Assigned user must be project member.')
 
-    def create_task_as_manager_not_in_project(self):
+    def test_create_task_as_manager_not_in_project(self):
         self.api_authentication(self.other_manager_token)
         response = self.client.post(self.url, {'title': 'task',
                                                'developer': self.developer.id,
